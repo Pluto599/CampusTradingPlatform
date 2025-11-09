@@ -1,0 +1,121 @@
+@startuml 类图
+
+' 实体类
+class User {
+  +Long id
+  +String username
+  +String email
+  +String phone
+  +String passwordHash
+  +int creditScore
+  +Date registeredAt
+  +String avatarUrl
+  --
+  +register()
+  +login()
+  +resetPassword()
+  +editProfile()
+}
+
+class Product {
+  +Long id
+  +String title
+  +BigDecimal price
+  +String description
+  +List<String> imageUrls
+  +String status   ' e.g., "PUBLISHED", "OFFLINE"
+  +Date createdAt
+  +Date updatedAt
+  --
+  +publish()
+  +edit()
+  +remove()
+  +changeStatus()
+}
+
+class Category {
+  +Long id
+  +String name
+}
+
+class Tag {
+  +Long id
+  +String name
+}
+
+class Favorite {
+  +Long id
+  +Date favoritedAt
+}
+
+class BrowseHistory {
+  +Long id
+  +Date viewedAt
+  +String snapshotTitle
+}
+
+class Conversation {
+  +Long id
+  +Date createdAt
+  +List<Message> messages
+  --
+  +sendMessage()
+  +getHistory()
+}
+
+class Message {
+  +Long id
+  +Long senderId
+  +Long receiverId
+  +String content
+  +Date sentAt
+  +String type  ' text/image/contact
+  --
+  +markRead()
+}
+
+' 服务类（简化的接口/控制器）
+class AuthService {
+  +registerUser()
+  +login()
+  +sendResetCode()
+  +verifyToken()
+}
+
+class ProductService {
+  +createProduct()
+  +updateProduct()
+  +deleteProduct()
+  +listProducts()
+}
+
+class SearchService {
+  +indexProduct()
+  +search(query, filters)
+}
+
+class ChatService {
+  +createConversation()
+  +sendMessage()
+  +getConversation()
+}
+
+' 关系
+User "1" -- "0..*" Product : owns >
+Product "*" -- "0..*" Tag : has >
+Product "*" -- "1" Category : belongs to >
+User "1" -- "0..*" Favorite : "favorites"
+Favorite "*" -- "1" Product
+User "1" -- "0..*" BrowseHistory
+User "1" -- "0..*" Conversation : participates >
+Conversation "1" -- "0..*" Message : contains >
+User "1" -- "0..*" Message : sends/receives >
+
+' 服务与实体
+AuthService ..> User : manages
+ProductService ..> Product : manages
+SearchService ..> Product : indexes/searches
+ChatService ..> Conversation
+ChatService ..> Message
+
+@enduml

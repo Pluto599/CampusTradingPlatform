@@ -1,0 +1,41 @@
+@startuml 组件图
+
+package "Frontend" {
+  [Web App] as WebApp
+  [Mobile App] as MobileApp
+}
+
+package "Backend (微服务)" {
+  [API Gateway] as APIGW
+  [Auth Service] as Auth
+  [Product Service] as ProductSvc
+  [Search Service] as SearchSvc
+  [Chat Service] as ChatSvc
+  [Notification Service] as NotifySvc
+}
+
+database "Primary DB\n(关系型，如MySQL/Postgres)" as DB
+queue "Message Queue\n(RabbitMQ/Kafka)" as MQ
+folder "Image Storage\n(OSS/S3)" as ImageStore
+cloud "CDN" as CDN
+component "Search Index\n(ElasticSearch)" as ES
+
+' 关系
+WebApp --> APIGW : REST / GraphQL
+MobileApp --> APIGW : REST / GraphQL
+
+APIGW --> Auth : Auth check / token
+APIGW --> ProductSvc : product APIs
+APIGW --> SearchSvc : search APIs
+APIGW --> ChatSvc : chat APIs
+APIGW --> NotifySvc : push / email
+
+ProductSvc --> DB : CRUD product data
+ProductSvc --> ImageStore : upload images
+ProductSvc --> ES : index product
+SearchSvc --> ES : query
+ChatSvc --> DB : store messages
+NotifySvc --> MQ : enqueue notifications
+ImageStore --> CDN : serve images (cached)
+
+@enduml

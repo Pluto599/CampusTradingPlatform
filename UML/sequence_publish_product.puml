@@ -1,0 +1,32 @@
+@startuml 时序图
+
+participant "用户浏览器/客户端" as Client
+participant "Web 前端" as Frontend
+participant "API 网关" as APIGW
+participant "Auth 服务" as AuthSvc
+participant "Product 服务" as ProductSvc
+participant "Image 存储 (OSS/S3)" as ImageStore
+participant "主数据库" as DB
+participant "Search 索引 (ES)" as ES
+
+Client -> Frontend : 填写商品信息 + 选择图片
+Client -> Frontend : 点击「发布」
+Frontend -> APIGW : POST /api/products (含 token + 商品数据)
+APIGW -> AuthSvc : 验证 token
+AuthSvc --> APIGW : token 有效 / 用户ID
+APIGW -> ProductSvc : createProduct(payload, userId)
+ProductSvc -> ImageStore : upload images
+ImageStore --> ProductSvc : 返回 image URLs
+ProductSvc -> DB : INSERT product (包含 image URLs)
+DB --> ProductSvc : 返回 productId
+ProductSvc -> ES : index product 数据
+ES --> ProductSvc : 索引成功
+ProductSvc --> APIGW : 创建成功 (productId)
+APIGW --> Frontend : 返回创建成功信息
+Frontend --> Client : 显示发布成功
+
+note over ImageStore, CDN
+  图片通过 OSS 存储并由 CDN 分发
+end note
+
+@enduml
