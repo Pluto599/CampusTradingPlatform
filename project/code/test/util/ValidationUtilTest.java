@@ -6,6 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidationUtilTest {
 
+	private static String repeat(String s, int count) {
+		StringBuilder sb = new StringBuilder(s.length() * count);
+		for (int i = 0; i < count; i++) {
+			sb.append(s);
+		}
+		return sb.toString();
+	}
+
 	@Test
 	void isValidUsername_nullShouldBeFalse() {
 		assertFalse(ValidationUtil.isValidUsername(null));
@@ -23,12 +31,12 @@ public class ValidationUtilTest {
 
 	@Test
 	void isValidUsername_maxLengthShouldBeTrue() {
-		assertTrue(ValidationUtil.isValidUsername("a".repeat(20)));
+		assertTrue(ValidationUtil.isValidUsername(repeat("a", 20)));
 	}
 
 	@Test
 	void isValidUsername_tooLongShouldBeFalse() {
-		assertFalse(ValidationUtil.isValidUsername("a".repeat(21)));
+		assertFalse(ValidationUtil.isValidUsername(repeat("a", 21)));
 	}
 
 	@Test
@@ -128,12 +136,12 @@ public class ValidationUtilTest {
 
 	@Test
 	void isValidProductTitle_length100ShouldBeTrue() {
-		assertTrue(ValidationUtil.isValidProductTitle("a".repeat(100)));
+		assertTrue(ValidationUtil.isValidProductTitle(repeat("a", 100)));
 	}
 
 	@Test
 	void isValidProductTitle_length101ShouldBeFalse() {
-		assertFalse(ValidationUtil.isValidProductTitle("a".repeat(101)));
+		assertFalse(ValidationUtil.isValidProductTitle(repeat("a", 101)));
 	}
 
 	@Test
@@ -148,11 +156,11 @@ public class ValidationUtilTest {
 
 	@Test
 	void isValidDescription_length1000ShouldBeTrue() {
-		assertTrue(ValidationUtil.isValidDescription("a".repeat(1000)));
+		assertTrue(ValidationUtil.isValidDescription(repeat("a", 1000)));
 	}
 
 	@Test
 	void isValidDescription_length1001ShouldBeFalse() {
-		assertFalse(ValidationUtil.isValidDescription("a".repeat(1001)));
+		assertFalse(ValidationUtil.isValidDescription(repeat("a", 1001)));
 	}
 }
