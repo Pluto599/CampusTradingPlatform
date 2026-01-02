@@ -65,6 +65,16 @@ public class AuthService {
 	 * 用户登录
 	 */
 	public boolean login(String username, String password) {
+		if (username == null || username.isEmpty()) {
+			System.out.println("用户名不能为空！");
+			return false;
+		}
+
+		if (password == null || password.isEmpty()) {
+			System.out.println("密码不能为空！");
+			return false;
+		}
+
 		User user = db.getUserByUsername(username);
 
 		if (user == null) {

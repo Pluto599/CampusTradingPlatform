@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="fuzz.AuthServiceLoginFuzzTest" time="2.418" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="fuzz.AuthServiceLoginFuzzTest" time="2.619" tests="4" errors="1" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="24"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="GBK"/>
-    <property name="java.class.path" value="E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code\target\test-classes;E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code\target\classes;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\13573\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\13573\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-junit\0.29.1\jazzer-junit-0.29.1.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-api\0.29.1\jazzer-api-0.29.1.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer\0.29.1\jazzer-0.29.1.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-launcher\1.10.2\junit-platform-launcher-1.10.2.jar;"/>
+    <property name="java.class.path" value="X:\target\test-classes;X:\target\classes;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\13573\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\13573\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-junit\0.23.0\jazzer-junit-0.23.0.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-api\0.23.0\jazzer-api-0.23.0.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer\0.23.0\jazzer-0.23.0.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-launcher\1.10.2\junit-platform-launcher-1.10.2.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,10 +15,10 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CN"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-24\bin"/>
-    <property name="sun.java.command" value="D:\temp\surefire50447742175546401\surefirebooter-20260102170537391_3.jar D:\temp\surefire50447742175546401 2026-01-02T17-05-37_052-jvmRun1 surefire-20260102170537391_1tmp surefire_0-20260102170537391_2tmp"/>
+    <property name="sun.java.command" value="D:\temp\surefire9999235368318647153\surefirebooter-20260102204341971_3.jar D:\temp\surefire9999235368318647153 2026-01-02T20-43-41_625-jvmRun1 surefire-20260102204341971_1tmp surefire_0-20260102204341971_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="test" value="fuzz.AuthServiceLoginFuzzTest"/>
-    <property name="surefire.test.class.path" value="E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code\target\test-classes;E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code\target\classes;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\13573\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\13573\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-junit\0.29.1\jazzer-junit-0.29.1.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-api\0.29.1\jazzer-api-0.29.1.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer\0.29.1\jazzer-0.29.1.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-launcher\1.10.2\junit-platform-launcher-1.10.2.jar;"/>
+    <property name="surefire.test.class.path" value="X:\target\test-classes;X:\target\classes;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\13573\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\13573\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-junit\0.23.0\jazzer-junit-0.23.0.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer-api\0.23.0\jazzer-api-0.23.0.jar;C:\Users\13573\.m2\repository\com\code-intelligence\jazzer\0.23.0\jazzer-0.23.0.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\13573\.m2\repository\org\junit\platform\junit-platform-launcher\1.10.2\junit-platform-launcher-1.10.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\13573"/>
     <property name="user.language" value="zh"/>
@@ -26,12 +26,12 @@
     <property name="java.version.date" value="2025-04-15"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-24"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code"/>
+    <property name="basedir" value="X:\"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="D:\temp\surefire50447742175546401\surefirebooter-20260102170537391_3.jar"/>
+    <property name="surefire.real.class.path" value="D:\temp\surefire9999235368318647153\surefirebooter-20260102204341971_3.jar"/>
     <property name="jdk.net.URLClassPath.disableClassPathURLCheck" value="true"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -47,12 +47,12 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="D:\temp\"/>
     <property name="java.version" value="24.0.1"/>
-    <property name="user.dir" value="E:\Desktop\NJU\大三上\软件工程\lab\lab5\project\code"/>
+    <property name="user.dir" value="X:\"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="native.encoding" value="GBK"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk-24\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;c:\Users\13573\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\13573\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMWare\bin\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\mingw64\bin;C:\Program Files\mingw64\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;E:\Program Files\texlive\2025\bin\windows;C:\Program Files\Java\jdk-24\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\cbmc\bin;C:\Program Files\CMake\bin;C:\apache-maven-3.9.12\bin;C:\Users\13573\AppData\Local\Programs\Python\Python314\Scripts\;C:\Users\13573\AppData\Local\Programs\Python\Python314\;E:\VMWare\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet;C:\Program Files\mingw64\bin;D:\Qt\Tools\mingw1120_64\bin;D:\Qt\Tools\mingw1310_64\bin;D:\Qt\6.7.0\mingw_64\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Users\13573\scoop\shims;C:\Users\13573\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\13573\AppData\Local\Programs\Python\Python311;C:\Users\13573\AppData\Local\Microsoft\WindowsApps;C:\Users\13573\AppData\Local\Programs\Microsoft VS Code\bin;D:\texlive\2023\bin\windows;C:\Users\13573\AppData\Roaming\;C:\Users\13573\AppData\Local\GitHubDesktop\bin;;C:\Users\13573\AppData\Roaming\Programs\Zero Install;c:\Users\13573\.vscode\extensions\vscjava.vscode-java-debug-0.58.4\bundled\scripts\noConfigScripts;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-24\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;c:\Users\13573\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\13573\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files\Common Files\Oracle\Java\javapath;E:\VMWare\bin\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\mingw64\bin;C:\Program Files\mingw64\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;E:\Program Files\texlive\2025\bin\windows;C:\Program Files\Java\jdk-24\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\cbmc\bin;C:\Program Files\CMake\bin;C:\apache-maven-3.9.12\bin;C:\Users\13573\AppData\Local\Programs\Python\Python314\Scripts\;C:\Users\13573\AppData\Local\Programs\Python\Python314\;E:\VMWare\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet;C:\Program Files\mingw64\bin;D:\Qt\Tools\mingw1120_64\bin;D:\Qt\Tools\mingw1310_64\bin;D:\Qt\6.7.0\mingw_64\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Users\13573\scoop\shims;C:\Users\13573\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\13573\AppData\Local\Programs\Python\Python311;C:\Users\13573\AppData\Local\Microsoft\WindowsApps;C:\Users\13573\AppData\Local\Programs\Microsoft VS Code\bin;D:\texlive\2023\bin\windows;C:\Users\13573\AppData\Roaming\;C:\Users\13573\AppData\Local\GitHubDesktop\bin;;C:\Users\13573\AppData\Roaming\Programs\Zero Install;c:\Users\13573\.vscode\extensions\ms-python.debugpy-2025.18.0-win32-x64\bundled\scripts\noConfigScripts;c:\Users\13573\.vscode\extensions\vscjava.vscode-java-debug-0.58.4\bundled\scripts\noConfigScripts;."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
     <property name="stderr.encoding" value="GBK"/>
     <property name="java.vendor" value="Oracle Corporation"/>
@@ -60,11 +60,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="68.0"/>
   </properties>
-  <testcase name="loginShouldNotThrow(FuzzedDataProvider)[1]" classname="fuzz.AuthServiceLoginFuzzTest" time="0.129">
+  <testcase name="loginShouldNotCrash(FuzzedDataProvider)[1]" classname="fuzz.AuthServiceLoginFuzzTest" time="0.106">
     <system-out><![CDATA[注册成功！用户ID: 1
 用户不存在！
 ]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (D:\temp\byteBuddyAgent17283798947600846476.jar)
+    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (D:\temp\byteBuddyAgent4178283325556539003.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
 WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
 WARNING: Dynamic loading of agents will be disallowed by default in a future release
@@ -72,11 +72,9 @@ INFO: Loaded 290 hooks from com.code_intelligence.jazzer.runtime.TraceCmpHooks
 INFO: Loaded 5 hooks from com.code_intelligence.jazzer.runtime.TraceDivHooks
 INFO: Loaded 2 hooks from com.code_intelligence.jazzer.runtime.TraceIndirHooks
 INFO: Loaded 4 hooks from com.code_intelligence.jazzer.runtime.NativeLibHooks
-INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.BigDecimal
 INFO: Loaded 2 hooks from com.code_intelligence.jazzer.sanitizers.ClojureLangHooks
 INFO: Loaded 5 hooks from com.code_intelligence.jazzer.sanitizers.Deserialization
-INFO: Loaded 24 hooks from com.code_intelligence.jazzer.sanitizers.ExpressionLanguageInjection
-INFO: Loaded 31 hooks from com.code_intelligence.jazzer.sanitizers.FilePathTraversal
+INFO: Loaded 5 hooks from com.code_intelligence.jazzer.sanitizers.ExpressionLanguageInjection
 INFO: Loaded 70 hooks from com.code_intelligence.jazzer.sanitizers.LdapInjection
 INFO: Loaded 46 hooks from com.code_intelligence.jazzer.sanitizers.NamingContextLookup
 INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.OsCommandInjection
@@ -86,18 +84,182 @@ INFO: Loaded 16 hooks from com.code_intelligence.jazzer.sanitizers.RegexRoadbloc
 INFO: Loaded 12 hooks from com.code_intelligence.jazzer.sanitizers.ScriptEngineInjection
 INFO: Loaded 3 hooks from com.code_intelligence.jazzer.sanitizers.ServerSideRequestForgery
 INFO: Loaded 19 hooks from com.code_intelligence.jazzer.sanitizers.SqlInjection
-INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.TemplateInjection
-INFO: Loaded 63 hooks from com.code_intelligence.jazzer.sanitizers.UnsafeSanitizer
 INFO: Loaded 6 hooks from com.code_intelligence.jazzer.sanitizers.XPathInjection
-INFO: Loaded 20 hooks from com.code_intelligence.jazzer.sanitizers.XmlParserSsrfGuidance
-INFO: Instrumented fuzz.AuthServiceLoginFuzzTest with custom hooks only (took 64 ms, size +-1%)
-INFO: Instrumented repository.Database with custom hooks only (took 24 ms, size +0%)
-INFO: Instrumented service.AuthService with custom hooks only (took 6 ms, size +-1%)
-INFO: Instrumented model.Category with custom hooks only (took 5 ms, size +0%)
+INFO: Instrumented fuzz.AuthServiceLoginFuzzTest with custom hooks only (took 56 ms, size +0%)
+WARN: Failed to instrument java/lang/ProcessBuilder::
+java.lang.IllegalArgumentException: Unsupported class file major version 68
+	at com.code_intelligence.jazzer.third_party.org.objectweb.asm.ClassReader.<init>(ClassReader.java:200)
+	at com.code_intelligence.jazzer.third_party.org.objectweb.asm.ClassReader.<init>(ClassReader.java:180)
+	at com.code_intelligence.jazzer.third_party.org.objectweb.asm.ClassReader.<init>(ClassReader.java:166)
+	at com.code_intelligence.jazzer.instrumentor.HookInstrumentor.instrument(HookInstrumentor.kt:33)
+	at com.code_intelligence.jazzer.instrumentor.ClassInstrumentor.hooks(ClassInstrumentor.kt:50)
+	at com.code_intelligence.jazzer.agent.RuntimeInstrumentor.instrument(RuntimeInstrumentor.kt:242)
+	at com.code_intelligence.jazzer.agent.RuntimeInstrumentor.transformInternal(RuntimeInstrumentor.kt:195)
+	at com.code_intelligence.jazzer.agent.RuntimeInstrumentor.transform(RuntimeInstrumentor.kt:103)
+	at com.code_intelligence.jazzer.agent.RuntimeInstrumentor.transform(RuntimeInstrumentor.kt:166)
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:594)
+	at java.instrument/sun.instrument.InstrumentationImpl.retransformClasses0(Native Method)
+	at java.instrument/sun.instrument.InstrumentationImpl.retransformClasses(InstrumentationImpl.java:221)
+	at com.code_intelligence.jazzer.agent.Agent.retransformClassesWithRetry(Agent.kt:169)
+	at com.code_intelligence.jazzer.agent.Agent.installInternal(Agent.kt:162)
+	at com.code_intelligence.jazzer.agent.Agent.installInternal$default(Agent.kt:38)
+	at com.code_intelligence.jazzer.agent.Agent.install(Agent.kt:35)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.code_intelligence.jazzer.agent.AgentInstaller.install(AgentInstaller.java:54)
+	at com.code_intelligence.jazzer.junit.FuzzTestExecutor.configureAndInstallAgent(FuzzTestExecutor.java:276)
+	at com.code_intelligence.jazzer.junit.AgentConfiguringArgumentsProvider.provideArguments(AgentConfiguringArgumentsProvider.java:46)
+	at org.junit.jupiter.params.ParameterizedTestExtension.arguments(ParameterizedTestExtension.java:145)
+	at org.junit.jupiter.params.ParameterizedTestExtension.lambda$provideTestTemplateInvocationContexts$2(ParameterizedTestExtension.java:90)
+	at java.base/java.util.stream.ReferencePipeline$7$1FlatMap.accept(ReferencePipeline.java:289)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at java.base/java.util.stream.ReferencePipeline$7$1FlatMap.accept(ReferencePipeline.java:294)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at org.junit.jupiter.engine.descriptor.TestTemplateTestDescriptor.execute(TestTemplateTestDescriptor.java:110)
+	at org.junit.jupiter.engine.descriptor.TestTemplateTestDescriptor.execute(TestTemplateTestDescriptor.java:44)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:120)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+INFO: Instrumented repository.Database with custom hooks only (took 23 ms, size +0%)
+INFO: Instrumented service.AuthService with custom hooks only (took 4 ms, size +-1%)
+INFO: Instrumented model.Category with custom hooks only (took 2 ms, size +0%)
 INFO: Instrumented model.Tag with custom hooks only (took 2 ms, size +0%)
-INFO: Instrumented util.ValidationUtil with custom hooks only (took 3 ms, size +25%)
-INFO: Instrumented util.PasswordUtil with custom hooks only (took 3 ms, size +-2%)
-INFO: Instrumented model.User with custom hooks only (took 9 ms, size +0%)
+INFO: Instrumented util.ValidationUtil with custom hooks only (took 8 ms, size +25%)
+INFO: Instrumented util.PasswordUtil with custom hooks only (took 2 ms, size +0%)
+INFO: Instrumented model.User with custom hooks only (took 5 ms, size +0%)
 ]]></system-err>
+  </testcase>
+  <testcase name="loginShouldNotCrash(FuzzedDataProvider)[2]" classname="fuzz.AuthServiceLoginFuzzTest" time="0.003">
+    <system-out><![CDATA[注册成功！用户ID: 1
+密码错误！
+]]></system-out>
+  </testcase>
+  <testcase name="loginShouldNotCrash(FuzzedDataProvider)[3]" classname="fuzz.AuthServiceLoginFuzzTest" time="0.002">
+    <system-out><![CDATA[注册成功！用户ID: 1
+用户不存在！
+]]></system-out>
+  </testcase>
+  <testcase name="loginShouldNotCrash(FuzzedDataProvider)[4]" classname="fuzz.AuthServiceLoginFuzzTest" time="0.008">
+    <error message="java.lang.NullPointerException: Cannot invoke &quot;String.getBytes()&quot; because &quot;password&quot; is null" type="com.code_intelligence.jazzer.junit.FuzzTestFindingException"><![CDATA[com.code_intelligence.jazzer.junit.FuzzTestFindingException: java.lang.NullPointerException: Cannot invoke "String.getBytes()" because "password" is null
+	at com.code_intelligence.jazzer.junit.FuzzTestExtensions.runWithHooks(FuzzTestExtensions.java:119)
+	at com.code_intelligence.jazzer.junit.FuzzTestExtensions.interceptTestTemplateMethod(FuzzTestExtensions.java:78)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:395)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:261)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:571)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:315)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at java.base/java.util.stream.ReferencePipeline$7$1FlatMap.accept(ReferencePipeline.java:294)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at java.base/java.util.stream.ReferencePipeline$7$1FlatMap.accept(ReferencePipeline.java:294)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+Caused by: java.lang.NullPointerException: Cannot invoke "String.getBytes()" because "password" is null
+	at util.PasswordUtil.hashPassword(PasswordUtil.java:14)
+	at util.PasswordUtil.verifyPassword(PasswordUtil.java:35)
+	at service.AuthService.login(AuthService.java:75)
+	at fuzz.AuthServiceLoginFuzzTest.loginShouldNotCrash(AuthServiceLoginFuzzTest.java:36)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.code_intelligence.jazzer.junit.FuzzTestExtensions.runWithHooks(FuzzTestExtensions.java:111)
+	... 47 more
+]]></error>
+    <system-out><![CDATA[注册成功！用户ID: 1
+]]></system-out>
   </testcase>
 </testsuite>
