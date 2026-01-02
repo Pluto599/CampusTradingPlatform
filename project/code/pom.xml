@@ -89,7 +89,7 @@
                         <configuration>
                             <propertyName>jacocoArgLine</propertyName>
                             <!-- 写到临时目录（纯英文路径），避免中文路径/高版本 JDK 下落盘失败 -->
-                            <destFile>${java.io.tmpdir}jacoco.exec</destFile>
+                            <destFile>${java.io.tmpdir}/jacoco.exec</destFile>
                             <output>file</output>
                             <append>true</append>
                             <!-- 排除 JDK 自带类，避免在 JDK 24 上插桩失败 -->
@@ -103,7 +103,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <dataFile>${java.io.tmpdir}jacoco.exec</dataFile>
+                            <dataFile>${java.io.tmpdir}/jacoco.exec</dataFile>
                             <formats>
                                 <format>HTML</format>
                                 <format>XML</format>
