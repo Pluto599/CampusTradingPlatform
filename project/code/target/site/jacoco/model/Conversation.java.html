@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Conversation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Conversation.java</span></div><h1>Conversation.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Conversation {
+	private Long id;
+	private Long user1Id;
+	private Long user2Id;
+	private Date createdAt;
+	private List&lt;Message&gt; messages;
+
+<span class="nc" id="L14">	public Conversation() {</span>
+<span class="nc" id="L15">		this.createdAt = new Date();</span>
+<span class="nc" id="L16">		this.messages = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L17">	}</span>
+
+	public Conversation(Long id, Long user1Id, Long user2Id) {
+<span class="nc" id="L20">		this();</span>
+<span class="nc" id="L21">		this.id = id;</span>
+<span class="nc" id="L22">		this.user1Id = user1Id;</span>
+<span class="nc" id="L23">		this.user2Id = user2Id;</span>
+<span class="nc" id="L24">	}</span>
+
+	public Long getId() {
+<span class="nc" id="L27">		return id;</span>
+	}
+
+	public void setId(Long id) {
+<span class="nc" id="L31">		this.id = id;</span>
+<span class="nc" id="L32">	}</span>
+
+	public Long getUser1Id() {
+<span class="nc" id="L35">		return user1Id;</span>
+	}
+
+	public void setUser1Id(Long user1Id) {
+<span class="nc" id="L39">		this.user1Id = user1Id;</span>
+<span class="nc" id="L40">	}</span>
+
+	public Long getUser2Id() {
+<span class="nc" id="L43">		return user2Id;</span>
+	}
+
+	public void setUser2Id(Long user2Id) {
+<span class="nc" id="L47">		this.user2Id = user2Id;</span>
+<span class="nc" id="L48">	}</span>
+
+	public Date getCreatedAt() {
+<span class="nc" id="L51">		return createdAt;</span>
+	}
+
+	public void setCreatedAt(Date createdAt) {
+<span class="nc" id="L55">		this.createdAt = createdAt;</span>
+<span class="nc" id="L56">	}</span>
+
+	public List&lt;Message&gt; getMessages() {
+<span class="nc" id="L59">		return messages;</span>
+	}
+
+	public void setMessages(List&lt;Message&gt; messages) {
+<span class="nc" id="L63">		this.messages = messages;</span>
+<span class="nc" id="L64">	}</span>
+
+	public void addMessage(Message message) {
+<span class="nc" id="L67">		this.messages.add(message);</span>
+<span class="nc" id="L68">	}</span>
+
+	public boolean isParticipant(Long userId) {
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		return user1Id.equals(userId) || user2Id.equals(userId);</span>
+	}
+
+	public Long getOtherUserId(Long currentUserId) {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		return user1Id.equals(currentUserId) ? user2Id : user1Id;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

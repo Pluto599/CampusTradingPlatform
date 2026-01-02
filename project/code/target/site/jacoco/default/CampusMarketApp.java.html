@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CampusMarketApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">CampusMarketApp.java</span></div><h1>CampusMarketApp.java</h1><pre class="source lang-java linenums">import service.*;
+import model.*;
+import repository.Database;
+
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Scanner;
+
+public class CampusMarketApp {
+	private Scanner scanner;
+	private AuthService authService;
+	private ProductService productService;
+	private SearchService searchService;
+	private ChatService chatService;
+	private UserService userService;
+	private Database db;
+
+<span class="nc" id="L20">	public CampusMarketApp() {</span>
+		// 使用 UTF-8 确保控制台输入输出不乱码
+		try {
+<span class="nc" id="L23">			System.setOut(</span>
+<span class="nc" id="L24">					new java.io.PrintStream(new java.io.FileOutputStream(java.io.FileDescriptor.out), true, &quot;UTF-8&quot;));</span>
+<span class="nc" id="L25">			System.setErr(</span>
+<span class="nc" id="L26">					new java.io.PrintStream(new java.io.FileOutputStream(java.io.FileDescriptor.err), true, &quot;UTF-8&quot;));</span>
+<span class="nc" id="L27">		} catch (UnsupportedEncodingException e) {</span>
+			// 忽略
+		}
+
+<span class="nc" id="L31">		scanner = new java.util.Scanner(System.in, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L32">		authService = new AuthService();</span>
+<span class="nc" id="L33">		productService = new ProductService(authService);</span>
+<span class="nc" id="L34">		searchService = new SearchService();</span>
+<span class="nc" id="L35">		chatService = new ChatService(authService);</span>
+<span class="nc" id="L36">		userService = new UserService(authService);</span>
+<span class="nc" id="L37">		db = Database.getInstance();</span>
+<span class="nc" id="L38">	}</span>
+
+	public void start() {
+<span class="nc" id="L41">		System.out.println(&quot;╔══════════════════════════════╗&quot;);</span>
+<span class="nc" id="L42">		System.out.println(&quot;║   欢迎使用校园二手交易平台   ║&quot;);</span>
+<span class="nc" id="L43">		System.out.println(&quot;╚══════════════════════════════╝&quot;);</span>
+
+<span class="nc" id="L45">		while (true) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">			if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L47">				showGuestMenu();</span>
+<span class="nc" id="L48">			} else {</span>
+<span class="nc" id="L49">				showUserMenu();</span>
+			}
+		}
+	}
+
+	/**
+	 * 游客菜单
+	 */
+	private void showGuestMenu() {
+<span class="nc" id="L58">		System.out.println(&quot;\n========== 主菜单 ==========&quot;);</span>
+<span class="nc" id="L59">		System.out.println(&quot;1. 注册&quot;);</span>
+<span class="nc" id="L60">		System.out.println(&quot;2. 登录&quot;);</span>
+<span class="nc" id="L61">		System.out.println(&quot;3. 浏览商品&quot;);</span>
+<span class="nc" id="L62">		System.out.println(&quot;4. 搜索商品&quot;);</span>
+<span class="nc" id="L63">		System.out.println(&quot;5. 查看商品详情&quot;);</span>
+<span class="nc" id="L64">		System.out.println(&quot;0. 退出系统&quot;);</span>
+<span class="nc" id="L65">		System.out.println(&quot;============================&quot;);</span>
+<span class="nc" id="L66">		System.out.print(&quot;请选择: &quot;);</span>
+
+<span class="nc" id="L68">		String choice = scanner.nextLine().trim();</span>
+
+<span class="nc bnc" id="L70" title="All 7 branches missed.">		switch (choice) {</span>
+			case &quot;1&quot;:
+<span class="nc" id="L72">				handleRegister();</span>
+<span class="nc" id="L73">				break;</span>
+			case &quot;2&quot;:
+<span class="nc" id="L75">				handleLogin();</span>
+<span class="nc" id="L76">				break;</span>
+			case &quot;3&quot;:
+<span class="nc" id="L78">				handleBrowseProducts();</span>
+<span class="nc" id="L79">				break;</span>
+			case &quot;4&quot;:
+<span class="nc" id="L81">				handleSearchProducts();</span>
+<span class="nc" id="L82">				break;</span>
+			case &quot;5&quot;:
+<span class="nc" id="L84">				handleViewProductDetail();</span>
+<span class="nc" id="L85">				break;</span>
+			case &quot;0&quot;:
+<span class="nc" id="L87">				System.out.println(&quot;感谢使用，再见！&quot;);</span>
+<span class="nc" id="L88">				System.exit(0);</span>
+<span class="nc" id="L89">				break;</span>
+			default:
+<span class="nc" id="L91">				System.out.println(&quot;无效选择，请重新输入&quot;);</span>
+		}
+<span class="nc" id="L93">	}</span>
+
+	/**
+	 * 已登录用户菜单
+	 */
+	private void showUserMenu() {
+<span class="nc" id="L99">		System.out.println(&quot;\n========== 用户中心 ==========&quot;);</span>
+<span class="nc" id="L100">		System.out.println(&quot;当前用户: &quot; + authService.getCurrentUser().getUsername());</span>
+<span class="nc" id="L101">		System.out.println(&quot;1. 浏览商品&quot;);</span>
+<span class="nc" id="L102">		System.out.println(&quot;2. 搜索商品&quot;);</span>
+<span class="nc" id="L103">		System.out.println(&quot;3. 查看商品详情&quot;);</span>
+<span class="nc" id="L104">		System.out.println(&quot;4. 发布商品&quot;);</span>
+<span class="nc" id="L105">		System.out.println(&quot;5. 我的发布&quot;);</span>
+<span class="nc" id="L106">		System.out.println(&quot;6. 我的收藏&quot;);</span>
+<span class="nc" id="L107">		System.out.println(&quot;7. 浏览历史&quot;);</span>
+<span class="nc" id="L108">		System.out.println(&quot;8. 站内消息&quot;);</span>
+<span class="nc" id="L109">		System.out.println(&quot;9. 个人资料&quot;);</span>
+<span class="nc" id="L110">		System.out.println(&quot;0. 退出登录&quot;);</span>
+<span class="nc" id="L111">		System.out.println(&quot;============================&quot;);</span>
+<span class="nc" id="L112">		System.out.print(&quot;请选择: &quot;);</span>
+
+<span class="nc" id="L114">		String choice = scanner.nextLine().trim();</span>
+
+<span class="nc bnc" id="L116" title="All 11 branches missed.">		switch (choice) {</span>
+			case &quot;1&quot;:
+<span class="nc" id="L118">				handleBrowseProducts();</span>
+<span class="nc" id="L119">				break;</span>
+			case &quot;2&quot;:
+<span class="nc" id="L121">				handleSearchProducts();</span>
+<span class="nc" id="L122">				break;</span>
+			case &quot;3&quot;:
+<span class="nc" id="L124">				handleViewProductDetail();</span>
+<span class="nc" id="L125">				break;</span>
+			case &quot;4&quot;:
+<span class="nc" id="L127">				handlePublishProduct();</span>
+<span class="nc" id="L128">				break;</span>
+			case &quot;5&quot;:
+<span class="nc" id="L130">				handleMyProducts();</span>
+<span class="nc" id="L131">				break;</span>
+			case &quot;6&quot;:
+<span class="nc" id="L133">				handleMyFavorites();</span>
+<span class="nc" id="L134">				break;</span>
+			case &quot;7&quot;:
+<span class="nc" id="L136">				handleBrowseHistory();</span>
+<span class="nc" id="L137">				break;</span>
+			case &quot;8&quot;:
+<span class="nc" id="L139">				handleMessages();</span>
+<span class="nc" id="L140">				break;</span>
+			case &quot;9&quot;:
+<span class="nc" id="L142">				handleUserProfile();</span>
+<span class="nc" id="L143">				break;</span>
+			case &quot;0&quot;:
+<span class="nc" id="L145">				authService.logout();</span>
+<span class="nc" id="L146">				break;</span>
+			default:
+<span class="nc" id="L148">				System.out.println(&quot;无效选择，请重新输入&quot;);</span>
+		}
+<span class="nc" id="L150">	}</span>
+
+	/**
+	 * 处理用户注册
+	 */
+	private void handleRegister() {
+<span class="nc" id="L156">		System.out.println(&quot;\n========== 用户注册 ==========&quot;);</span>
+<span class="nc" id="L157">		System.out.print(&quot;用户名 (3-20位字母数字下划线): &quot;);</span>
+<span class="nc" id="L158">		String username = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L160">		System.out.print(&quot;邮箱: &quot;);</span>
+<span class="nc" id="L161">		String email = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L163">		System.out.print(&quot;手机号: &quot;);</span>
+<span class="nc" id="L164">		String phone = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L166">		System.out.print(&quot;密码 (至少6位): &quot;);</span>
+<span class="nc" id="L167">		String password = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L169">		System.out.print(&quot;确认密码: &quot;);</span>
+<span class="nc" id="L170">		String confirmPassword = scanner.nextLine().trim();</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (!password.equals(confirmPassword)) {</span>
+<span class="nc" id="L173">			System.out.println(&quot;两次密码输入不一致！&quot;);</span>
+<span class="nc" id="L174">			return;</span>
+		}
+
+<span class="nc" id="L177">		authService.registerUser(username, email, phone, password);</span>
+<span class="nc" id="L178">	}</span>
+
+	/**
+	 * 处理用户登录
+	 */
+	private void handleLogin() {
+<span class="nc" id="L184">		System.out.println(&quot;\n========== 用户登录 ==========&quot;);</span>
+<span class="nc" id="L185">		System.out.print(&quot;用户名: &quot;);</span>
+<span class="nc" id="L186">		String username = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L188">		System.out.print(&quot;密码: &quot;);</span>
+<span class="nc" id="L189">		String password = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L191">		authService.login(username, password);</span>
+<span class="nc" id="L192">	}</span>
+
+	/**
+	 * 浏览商品列表
+	 */
+	private void handleBrowseProducts() {
+<span class="nc" id="L198">		System.out.println(&quot;\n========== 商品列表 ==========&quot;);</span>
+
+		// 显示分类筛选
+<span class="nc" id="L201">		System.out.println(&quot;\n可选分类:&quot;);</span>
+<span class="nc" id="L202">		List&lt;Category&gt; categories = db.getAllCategories();</span>
+<span class="nc" id="L203">		System.out.println(&quot;0. 全部分类&quot;);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		for (int i = 0; i &lt; categories.size(); i++) {</span>
+<span class="nc" id="L205">			System.out.println((i + 1) + &quot;. &quot; + categories.get(i).getName());</span>
+		}
+
+<span class="nc" id="L208">		System.out.print(&quot;\n选择分类 (直接回车查看全部): &quot;);</span>
+<span class="nc" id="L209">		String categoryChoice = scanner.nextLine().trim();</span>
+
+		List&lt;Product&gt; products;
+<span class="nc bnc" id="L212" title="All 4 branches missed.">		if (categoryChoice.isEmpty() || categoryChoice.equals(&quot;0&quot;)) {</span>
+<span class="nc" id="L213">			products = productService.listPublishedProducts();</span>
+<span class="nc" id="L214">		} else {</span>
+			try {
+<span class="nc" id="L216">				int index = Integer.parseInt(categoryChoice) - 1;</span>
+<span class="nc bnc" id="L217" title="All 4 branches missed.">				if (index &gt;= 0 &amp;&amp; index &lt; categories.size()) {</span>
+<span class="nc" id="L218">					Long categoryId = categories.get(index).getId();</span>
+<span class="nc" id="L219">					products = productService.getProductsByCategory(categoryId);</span>
+<span class="nc" id="L220">				} else {</span>
+<span class="nc" id="L221">					products = productService.listPublishedProducts();</span>
+				}
+<span class="nc" id="L223">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L224">				products = productService.listPublishedProducts();</span>
+			}
+		}
+
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (products.isEmpty()) {</span>
+<span class="nc" id="L229">			System.out.println(&quot;暂无商品&quot;);</span>
+<span class="nc" id="L230">			return;</span>
+		}
+
+<span class="nc" id="L233">		displayProductList(products);</span>
+<span class="nc" id="L234">	}</span>
+
+	/**
+	 * 搜索商品
+	 */
+	private void handleSearchProducts() {
+<span class="nc" id="L240">		System.out.println(&quot;\n========== 搜索商品 ==========&quot;);</span>
+<span class="nc" id="L241">		System.out.print(&quot;输入搜索关键词: &quot;);</span>
+<span class="nc" id="L242">		String query = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L244">		List&lt;Product&gt; products = searchService.search(query);</span>
+
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (products.isEmpty()) {</span>
+<span class="nc" id="L247">			System.out.println(&quot;未找到相关商品&quot;);</span>
+<span class="nc" id="L248">			return;</span>
+		}
+
+<span class="nc" id="L251">		System.out.println(&quot;\n找到 &quot; + products.size() + &quot; 个商品:&quot;);</span>
+<span class="nc" id="L252">		displayProductList(products);</span>
+<span class="nc" id="L253">	}</span>
+
+	/**
+	 * 显示商品列表
+	 */
+	private void displayProductList(List&lt;Product&gt; products) {
+<span class="nc" id="L259">		System.out.println(&quot;\n----------------------------------------&quot;);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		for (int i = 0; i &lt; products.size(); i++) {</span>
+<span class="nc" id="L261">			Product p = products.get(i);</span>
+<span class="nc" id="L262">			Category category = db.getCategoryById(p.getCategoryId());</span>
+<span class="nc" id="L263">			User owner = db.getUserById(p.getOwnerId());</span>
+
+<span class="nc" id="L265">			System.out.println((i + 1) + &quot;. [&quot; + p.getId() + &quot;] &quot; + p.getTitle());</span>
+<span class="nc" id="L266">			System.out.println(&quot;   价格: ¥&quot; + p.getPrice() + &quot; | 分类: &quot; + category.getName());</span>
+<span class="nc" id="L267">			System.out.println(&quot;   卖家: &quot; + owner.getUsername() + &quot; | 状态: &quot; + p.getStatus());</span>
+<span class="nc" id="L268">			System.out.println(&quot;   描述: &quot; +</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">					(p.getDescription().length() &gt; 50 ? p.getDescription().substring(0, 50) + &quot;...&quot;</span>
+<span class="nc" id="L270">							: p.getDescription()));</span>
+<span class="nc" id="L271">			System.out.println(&quot;----------------------------------------&quot;);</span>
+		}
+<span class="nc" id="L273">	}</span>
+
+	/**
+	 * 查看商品详情
+	 */
+	private void handleViewProductDetail() {
+<span class="nc" id="L279">		System.out.print(&quot;\n请输入商品ID: &quot;);</span>
+<span class="nc" id="L280">		String idStr = scanner.nextLine().trim();</span>
+
+		try {
+<span class="nc" id="L283">			Long productId = Long.parseLong(idStr);</span>
+<span class="nc" id="L284">			Product product = productService.getProductById(productId);</span>
+
+<span class="nc bnc" id="L286" title="All 2 branches missed.">			if (product == null) {</span>
+<span class="nc" id="L287">				System.out.println(&quot;商品不存在！&quot;);</span>
+<span class="nc" id="L288">				return;</span>
+			}
+
+<span class="nc" id="L291">			displayProductDetail(product);</span>
+
+			// 如果已登录，显示操作菜单
+<span class="nc bnc" id="L294" title="All 2 branches missed.">			if (authService.isLoggedIn()) {</span>
+<span class="nc" id="L295">				showProductActions(product);</span>
+			}
+
+<span class="nc" id="L298">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L299">			System.out.println(&quot;无效的商品ID！&quot;);</span>
+		}
+<span class="nc" id="L301">	}</span>
+
+	/**
+	 * 显示商品详情
+	 */
+	private void displayProductDetail(Product product) {
+<span class="nc" id="L307">		Category category = db.getCategoryById(product.getCategoryId());</span>
+<span class="nc" id="L308">		User owner = db.getUserById(product.getOwnerId());</span>
+
+<span class="nc" id="L310">		System.out.println(&quot;\n========== 商品详情 ==========&quot;);</span>
+<span class="nc" id="L311">		System.out.println(&quot;商品ID: &quot; + product.getId());</span>
+<span class="nc" id="L312">		System.out.println(&quot;标题: &quot; + product.getTitle());</span>
+<span class="nc" id="L313">		System.out.println(&quot;价格: ¥&quot; + product.getPrice());</span>
+<span class="nc" id="L314">		System.out.println(&quot;分类: &quot; + category.getName());</span>
+<span class="nc" id="L315">		System.out.println(&quot;状态: &quot; + product.getStatus());</span>
+<span class="nc" id="L316">		System.out.println(&quot;描述: &quot; + product.getDescription());</span>
+<span class="nc" id="L317">		System.out.println(&quot;发布时间: &quot; + product.getCreatedAt());</span>
+<span class="nc" id="L318">		System.out.println(&quot;卖家: &quot; + owner.getUsername() + &quot; (ID: &quot; + owner.getId() + &quot;)&quot;);</span>
+<span class="nc" id="L319">		System.out.println(&quot;卖家信用分: &quot; + owner.getCreditScore());</span>
+<span class="nc" id="L320">		System.out.println(&quot;卖家联系方式: &quot; + owner.getPhone());</span>
+<span class="nc" id="L321">		System.out.println(&quot;============================&quot;);</span>
+<span class="nc" id="L322">	}</span>
+
+	/**
+	 * 商品操作菜单
+	 */
+	private void showProductActions(Product product) {
+<span class="nc" id="L328">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc" id="L329">		boolean isOwner = product.getOwnerId().equals(currentUser.getId());</span>
+
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		if (isOwner) {</span>
+			// 商品所有者的操作
+<span class="nc" id="L333">			System.out.println(&quot;\n商品管理:&quot;);</span>
+<span class="nc" id="L334">			System.out.println(&quot;1. 编辑商品&quot;);</span>
+<span class="nc" id="L335">			System.out.println(&quot;2. 下架商品&quot;);</span>
+<span class="nc" id="L336">			System.out.println(&quot;3. 删除商品&quot;);</span>
+<span class="nc" id="L337">			System.out.println(&quot;0. 返回&quot;);</span>
+<span class="nc" id="L338">			System.out.print(&quot;请选择: &quot;);</span>
+
+<span class="nc" id="L340">			String choice = scanner.nextLine().trim();</span>
+<span class="nc bnc" id="L341" title="All 4 branches missed.">			switch (choice) {</span>
+				case &quot;1&quot;:
+<span class="nc" id="L343">					handleEditProduct(product.getId());</span>
+<span class="nc" id="L344">					break;</span>
+				case &quot;2&quot;:
+<span class="nc" id="L346">					productService.changeProductStatus(product.getId(), &quot;OFFLINE&quot;);</span>
+<span class="nc" id="L347">					break;</span>
+				case &quot;3&quot;:
+<span class="nc" id="L349">					productService.deleteProduct(product.getId());</span>
+					break;
+			}
+<span class="nc" id="L352">		} else {</span>
+			// 其他用户的操作
+<span class="nc" id="L354">			System.out.println(&quot;\n可用操作:&quot;);</span>
+<span class="nc" id="L355">			System.out.println(&quot;1. 收藏商品&quot;);</span>
+<span class="nc" id="L356">			System.out.println(&quot;2. 联系卖家&quot;);</span>
+<span class="nc" id="L357">			System.out.println(&quot;0. 返回&quot;);</span>
+<span class="nc" id="L358">			System.out.print(&quot;请选择: &quot;);</span>
+
+<span class="nc" id="L360">			String choice = scanner.nextLine().trim();</span>
+<span class="nc bnc" id="L361" title="All 3 branches missed.">			switch (choice) {</span>
+				case &quot;1&quot;:
+<span class="nc" id="L363">					userService.addFavorite(product.getId());</span>
+<span class="nc" id="L364">					break;</span>
+				case &quot;2&quot;:
+<span class="nc" id="L366">					handleContactSeller(product.getOwnerId());</span>
+					break;
+			}
+		}
+<span class="nc" id="L370">	}</span>
+
+	/**
+	 * 发布商品
+	 */
+	private void handlePublishProduct() {
+<span class="nc" id="L376">		System.out.println(&quot;\n========== 发布商品 ==========&quot;);</span>
+
+<span class="nc" id="L378">		System.out.print(&quot;商品标题: &quot;);</span>
+<span class="nc" id="L379">		String title = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L381">		System.out.print(&quot;价格: &quot;);</span>
+<span class="nc" id="L382">		String priceStr = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L384">		System.out.print(&quot;描述: &quot;);</span>
+<span class="nc" id="L385">		String description = scanner.nextLine().trim();</span>
+
+		// 选择分类
+<span class="nc" id="L388">		List&lt;Category&gt; categories = db.getAllCategories();</span>
+<span class="nc" id="L389">		System.out.println(&quot;\n选择分类:&quot;);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">		for (int i = 0; i &lt; categories.size(); i++) {</span>
+<span class="nc" id="L391">			System.out.println((i + 1) + &quot;. &quot; + categories.get(i).getName());</span>
+		}
+<span class="nc" id="L393">		System.out.print(&quot;请选择 (1-&quot; + categories.size() + &quot;): &quot;);</span>
+<span class="nc" id="L394">		String categoryChoice = scanner.nextLine().trim();</span>
+
+		try {
+<span class="nc" id="L397">			BigDecimal price = new BigDecimal(priceStr);</span>
+<span class="nc" id="L398">			int categoryIndex = Integer.parseInt(categoryChoice) - 1;</span>
+
+<span class="nc bnc" id="L400" title="All 4 branches missed.">			if (categoryIndex &gt;= 0 &amp;&amp; categoryIndex &lt; categories.size()) {</span>
+<span class="nc" id="L401">				Long categoryId = categories.get(categoryIndex).getId();</span>
+<span class="nc" id="L402">				productService.createProduct(title, price, description, categoryId);</span>
+<span class="nc" id="L403">			} else {</span>
+<span class="nc" id="L404">				System.out.println(&quot;无效的分类选择！&quot;);</span>
+			}
+<span class="nc" id="L406">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L407">			System.out.println(&quot;输入格式错误！&quot;);</span>
+		}
+<span class="nc" id="L409">	}</span>
+
+	/**
+	 * 编辑商品
+	 */
+	private void handleEditProduct(Long productId) {
+<span class="nc" id="L415">		System.out.println(&quot;\n========== 编辑商品 ==========&quot;);</span>
+<span class="nc" id="L416">		System.out.println(&quot;(直接回车跳过不修改的项)&quot;);</span>
+
+<span class="nc" id="L418">		System.out.print(&quot;新标题: &quot;);</span>
+<span class="nc" id="L419">		String title = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L421">		System.out.print(&quot;新价格: &quot;);</span>
+<span class="nc" id="L422">		String priceStr = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L424">		System.out.print(&quot;新描述: &quot;);</span>
+<span class="nc" id="L425">		String description = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L427">		BigDecimal price = null;</span>
+<span class="nc bnc" id="L428" title="All 2 branches missed.">		if (!priceStr.isEmpty()) {</span>
+			try {
+<span class="nc" id="L430">				price = new BigDecimal(priceStr);</span>
+<span class="nc" id="L431">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L432">				System.out.println(&quot;价格格式错误！&quot;);</span>
+<span class="nc" id="L433">				return;</span>
+			}
+		}
+
+<span class="nc" id="L437">		productService.updateProduct(productId,</span>
+<span class="nc bnc" id="L438" title="All 2 branches missed.">				title.isEmpty() ? null : title,</span>
+<span class="nc" id="L439">				price,</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">				description.isEmpty() ? null : description,</span>
+<span class="nc" id="L441">				null);</span>
+<span class="nc" id="L442">	}</span>
+
+	/**
+	 * 我的发布
+	 */
+	private void handleMyProducts() {
+<span class="nc" id="L448">		System.out.println(&quot;\n========== 我的发布 ==========&quot;);</span>
+<span class="nc" id="L449">		List&lt;Product&gt; products = productService.getMyProducts();</span>
+
+<span class="nc bnc" id="L451" title="All 4 branches missed.">		if (products == null || products.isEmpty()) {</span>
+<span class="nc" id="L452">			System.out.println(&quot;您还没有发布任何商品&quot;);</span>
+<span class="nc" id="L453">			return;</span>
+		}
+
+<span class="nc" id="L456">		displayProductList(products);</span>
+<span class="nc" id="L457">	}</span>
+
+	/**
+	 * 我的收藏
+	 */
+	private void handleMyFavorites() {
+<span class="nc" id="L463">		System.out.println(&quot;\n========== 我的收藏 ==========&quot;);</span>
+<span class="nc" id="L464">		List&lt;Product&gt; products = userService.getMyFavorites();</span>
+
+<span class="nc bnc" id="L466" title="All 4 branches missed.">		if (products == null || products.isEmpty()) {</span>
+<span class="nc" id="L467">			System.out.println(&quot;您还没有收藏任何商品&quot;);</span>
+<span class="nc" id="L468">			return;</span>
+		}
+
+<span class="nc" id="L471">		displayProductList(products);</span>
+
+<span class="nc" id="L473">		System.out.print(&quot;\n是否取消收藏某个商品？(输入商品ID，直接回车返回): &quot;);</span>
+<span class="nc" id="L474">		String idStr = scanner.nextLine().trim();</span>
+<span class="nc bnc" id="L475" title="All 2 branches missed.">		if (!idStr.isEmpty()) {</span>
+			try {
+<span class="nc" id="L477">				Long productId = Long.parseLong(idStr);</span>
+<span class="nc" id="L478">				userService.removeFavorite(productId);</span>
+<span class="nc" id="L479">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L480">				System.out.println(&quot;无效的商品ID！&quot;);</span>
+			}
+		}
+<span class="nc" id="L483">	}</span>
+
+	/**
+	 * 浏览历史
+	 */
+	private void handleBrowseHistory() {
+<span class="nc" id="L489">		System.out.println(&quot;\n========== 浏览历史 ==========&quot;);</span>
+<span class="nc" id="L490">		List&lt;BrowseHistory&gt; histories = userService.getBrowseHistory();</span>
+
+<span class="nc bnc" id="L492" title="All 4 branches missed.">		if (histories == null || histories.isEmpty()) {</span>
+<span class="nc" id="L493">			System.out.println(&quot;暂无浏览历史&quot;);</span>
+<span class="nc" id="L494">			return;</span>
+		}
+
+<span class="nc bnc" id="L497" title="All 2 branches missed.">		for (int i = 0; i &lt; Math.min(histories.size(), 20); i++) {</span>
+<span class="nc" id="L498">			BrowseHistory h = histories.get(i);</span>
+<span class="nc" id="L499">			Product p = db.getProductById(h.getProductId());</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">			if (p != null) {</span>
+<span class="nc" id="L501">				System.out.println((i + 1) + &quot;. [&quot; + p.getId() + &quot;] &quot; + h.getSnapshotTitle() +</span>
+<span class="nc" id="L502">						&quot; (浏览于: &quot; + h.getViewedAt() + &quot;)&quot;);</span>
+			}
+		}
+<span class="nc" id="L505">	}</span>
+
+	/**
+	 * 站内消息
+	 */
+	private void handleMessages() {
+<span class="nc" id="L511">		System.out.println(&quot;\n========== 站内消息 ==========&quot;);</span>
+<span class="nc" id="L512">		List&lt;Conversation&gt; conversations = chatService.getMyConversations();</span>
+
+<span class="nc bnc" id="L514" title="All 4 branches missed.">		if (conversations == null || conversations.isEmpty()) {</span>
+<span class="nc" id="L515">			System.out.println(&quot;暂无会话&quot;);</span>
+<span class="nc" id="L516">			return;</span>
+		}
+
+<span class="nc" id="L519">		System.out.println(&quot;我的会话列表:&quot;);</span>
+<span class="nc bnc" id="L520" title="All 2 branches missed.">		for (int i = 0; i &lt; conversations.size(); i++) {</span>
+<span class="nc" id="L521">			Conversation conv = conversations.get(i);</span>
+<span class="nc" id="L522">			Long otherUserId = conv.getOtherUserId(authService.getCurrentUser().getId());</span>
+<span class="nc" id="L523">			User otherUser = db.getUserById(otherUserId);</span>
+<span class="nc" id="L524">			System.out.println((i + 1) + &quot;. 与 &quot; + otherUser.getUsername() + &quot; 的会话 (ID: &quot; + conv.getId() + &quot;)&quot;);</span>
+		}
+
+<span class="nc" id="L527">		System.out.print(&quot;\n选择会话查看 (输入序号): &quot;);</span>
+<span class="nc" id="L528">		String choice = scanner.nextLine().trim();</span>
+
+		try {
+<span class="nc" id="L531">			int index = Integer.parseInt(choice) - 1;</span>
+<span class="nc bnc" id="L532" title="All 4 branches missed.">			if (index &gt;= 0 &amp;&amp; index &lt; conversations.size()) {</span>
+<span class="nc" id="L533">				handleConversation(conversations.get(index));</span>
+			}
+<span class="nc" id="L535">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L536">			System.out.println(&quot;无效输入！&quot;);</span>
+		}
+<span class="nc" id="L538">	}</span>
+
+	/**
+	 * 处理会话
+	 */
+	private void handleConversation(Conversation conversation) {
+<span class="nc" id="L544">		Long otherUserId = conversation.getOtherUserId(authService.getCurrentUser().getId());</span>
+<span class="nc" id="L545">		User otherUser = db.getUserById(otherUserId);</span>
+
+<span class="nc" id="L547">		while (true) {</span>
+<span class="nc" id="L548">			System.out.println(&quot;\n========== 与 &quot; + otherUser.getUsername() + &quot; 的对话 ==========&quot;);</span>
+
+<span class="nc" id="L550">			List&lt;Message&gt; messages = chatService.getConversationHistory(conversation.getId());</span>
+<span class="nc bnc" id="L551" title="All 4 branches missed.">			if (messages != null &amp;&amp; !messages.isEmpty()) {</span>
+<span class="nc bnc" id="L552" title="All 2 branches missed.">				for (Message msg : messages) {</span>
+<span class="nc" id="L553">					User sender = db.getUserById(msg.getSenderId());</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">					String prefix = msg.getSenderId().equals(authService.getCurrentUser().getId()) ? &quot;我&quot;</span>
+<span class="nc" id="L555">							: sender.getUsername();</span>
+<span class="nc" id="L556">					System.out.println(&quot;[&quot; + msg.getSentAt() + &quot;] &quot; + prefix + &quot;: &quot; + msg.getContent());</span>
+				}
+<span class="nc" id="L558">			} else {</span>
+<span class="nc" id="L559">				System.out.println(&quot;暂无消息&quot;);</span>
+			}
+
+<span class="nc" id="L562">			System.out.println(&quot;\n1. 发送消息&quot;);</span>
+<span class="nc" id="L563">			System.out.println(&quot;0. 返回&quot;);</span>
+<span class="nc" id="L564">			System.out.print(&quot;请选择: &quot;);</span>
+<span class="nc" id="L565">			String choice = scanner.nextLine().trim();</span>
+
+<span class="nc bnc" id="L567" title="All 2 branches missed.">			if (choice.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L568">				System.out.print(&quot;输入消息内容: &quot;);</span>
+<span class="nc" id="L569">				String content = scanner.nextLine().trim();</span>
+<span class="nc" id="L570">				chatService.sendMessage(conversation.getId(), content);</span>
+			} else {
+				break;
+			}
+		}
+<span class="nc" id="L575">	}</span>
+
+	/**
+	 * 联系卖家
+	 */
+	private void handleContactSeller(Long sellerId) {
+<span class="nc" id="L581">		Conversation conversation = chatService.getOrCreateConversation(sellerId);</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">		if (conversation != null) {</span>
+<span class="nc" id="L583">			handleConversation(conversation);</span>
+		}
+<span class="nc" id="L585">	}</span>
+
+	/**
+	 * 个人资料
+	 */
+	private void handleUserProfile() {
+<span class="nc" id="L591">		userService.displayUserProfile();</span>
+
+<span class="nc" id="L593">		System.out.println(&quot;1. 编辑资料&quot;);</span>
+<span class="nc" id="L594">		System.out.println(&quot;0. 返回&quot;);</span>
+<span class="nc" id="L595">		System.out.print(&quot;请选择: &quot;);</span>
+<span class="nc" id="L596">		String choice = scanner.nextLine().trim();</span>
+
+<span class="nc bnc" id="L598" title="All 2 branches missed.">		if (choice.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L599">			handleEditProfile();</span>
+		}
+<span class="nc" id="L601">	}</span>
+
+	/**
+	 * 编辑个人资料
+	 */
+	private void handleEditProfile() {
+<span class="nc" id="L607">		System.out.println(&quot;\n========== 编辑资料 ==========&quot;);</span>
+<span class="nc" id="L608">		System.out.println(&quot;(直接回车跳过不修改的项)&quot;);</span>
+
+<span class="nc" id="L610">		System.out.print(&quot;新邮箱: &quot;);</span>
+<span class="nc" id="L611">		String email = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L613">		System.out.print(&quot;新手机号: &quot;);</span>
+<span class="nc" id="L614">		String phone = scanner.nextLine().trim();</span>
+
+<span class="nc" id="L616">		authService.editProfile(</span>
+<span class="nc bnc" id="L617" title="All 2 branches missed.">				email.isEmpty() ? null : email,</span>
+<span class="nc bnc" id="L618" title="All 2 branches missed.">				phone.isEmpty() ? null : phone);</span>
+<span class="nc" id="L619">	}</span>
+
+	public static void main(String[] args) {
+<span class="nc" id="L622">		CampusMarketApp app = new CampusMarketApp();</span>
+<span class="nc" id="L623">		app.start();</span>
+<span class="nc" id="L624">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

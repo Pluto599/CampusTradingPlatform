@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Message.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Message.java</span></div><h1>Message.java</h1><pre class="source lang-java linenums">package model;
+
+import java.util.Date;
+
+public class Message {
+	private Long id;
+	private Long conversationId;
+	private Long senderId;
+	private Long receiverId;
+	private String content;
+	private Date sentAt;
+	private String type; // &quot;text&quot;, &quot;image&quot;, &quot;contact&quot;
+	private boolean read;
+
+<span class="nc" id="L15">	public Message() {</span>
+<span class="nc" id="L16">		this.sentAt = new Date();</span>
+<span class="nc" id="L17">		this.type = &quot;text&quot;;</span>
+<span class="nc" id="L18">		this.read = false;</span>
+<span class="nc" id="L19">	}</span>
+
+	public Message(Long id, Long conversationId, Long senderId, Long receiverId, String content) {
+<span class="nc" id="L22">		this();</span>
+<span class="nc" id="L23">		this.id = id;</span>
+<span class="nc" id="L24">		this.conversationId = conversationId;</span>
+<span class="nc" id="L25">		this.senderId = senderId;</span>
+<span class="nc" id="L26">		this.receiverId = receiverId;</span>
+<span class="nc" id="L27">		this.content = content;</span>
+<span class="nc" id="L28">	}</span>
+
+	public Long getId() {
+<span class="nc" id="L31">		return id;</span>
+	}
+
+	public void setId(Long id) {
+<span class="nc" id="L35">		this.id = id;</span>
+<span class="nc" id="L36">	}</span>
+
+	public Long getConversationId() {
+<span class="nc" id="L39">		return conversationId;</span>
+	}
+
+	public void setConversationId(Long conversationId) {
+<span class="nc" id="L43">		this.conversationId = conversationId;</span>
+<span class="nc" id="L44">	}</span>
+
+	public Long getSenderId() {
+<span class="nc" id="L47">		return senderId;</span>
+	}
+
+	public void setSenderId(Long senderId) {
+<span class="nc" id="L51">		this.senderId = senderId;</span>
+<span class="nc" id="L52">	}</span>
+
+	public Long getReceiverId() {
+<span class="nc" id="L55">		return receiverId;</span>
+	}
+
+	public void setReceiverId(Long receiverId) {
+<span class="nc" id="L59">		this.receiverId = receiverId;</span>
+<span class="nc" id="L60">	}</span>
+
+	public String getContent() {
+<span class="nc" id="L63">		return content;</span>
+	}
+
+	public void setContent(String content) {
+<span class="nc" id="L67">		this.content = content;</span>
+<span class="nc" id="L68">	}</span>
+
+	public Date getSentAt() {
+<span class="nc" id="L71">		return sentAt;</span>
+	}
+
+	public void setSentAt(Date sentAt) {
+<span class="nc" id="L75">		this.sentAt = sentAt;</span>
+<span class="nc" id="L76">	}</span>
+
+	public String getType() {
+<span class="nc" id="L79">		return type;</span>
+	}
+
+	public void setType(String type) {
+<span class="nc" id="L83">		this.type = type;</span>
+<span class="nc" id="L84">	}</span>
+
+	public boolean isRead() {
+<span class="nc" id="L87">		return read;</span>
+	}
+
+	public void setRead(boolean read) {
+<span class="nc" id="L91">		this.read = read;</span>
+<span class="nc" id="L92">	}</span>
+
+	public void markRead() {
+<span class="nc" id="L95">		this.read = true;</span>
+<span class="nc" id="L96">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

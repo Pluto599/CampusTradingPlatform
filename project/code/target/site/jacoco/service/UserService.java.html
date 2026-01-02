@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package service;
+
+import model.*;
+import repository.Database;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class UserService {
+	private Database db;
+	private AuthService authService;
+
+<span class="nc" id="L13">	public UserService(AuthService authService) {</span>
+<span class="nc" id="L14">		this.db = Database.getInstance();</span>
+<span class="nc" id="L15">		this.authService = authService;</span>
+<span class="nc" id="L16">	}</span>
+
+	/**
+	 * 收藏商品
+	 */
+	public boolean addFavorite(Long productId) {
+<span class="nc bnc" id="L22" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L23">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L24">			return false;</span>
+		}
+
+<span class="nc" id="L27">		Product product = db.getProductById(productId);</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">		if (product == null) {</span>
+<span class="nc" id="L29">			System.out.println(&quot;商品不存在！&quot;);</span>
+<span class="nc" id="L30">			return false;</span>
+		}
+
+<span class="nc" id="L33">		User currentUser = authService.getCurrentUser();</span>
+
+		// 检查是否已收藏
+<span class="nc bnc" id="L36" title="All 2 branches missed.">		if (db.getFavoriteByUserAndProduct(currentUser.getId(), productId) != null) {</span>
+<span class="nc" id="L37">			System.out.println(&quot;已经收藏过该商品！&quot;);</span>
+<span class="nc" id="L38">			return false;</span>
+		}
+
+<span class="nc" id="L41">		Long favoriteId = db.generateFavoriteId();</span>
+<span class="nc" id="L42">		Favorite favorite = new Favorite(favoriteId, currentUser.getId(), productId);</span>
+<span class="nc" id="L43">		db.addFavorite(favorite);</span>
+
+<span class="nc" id="L45">		System.out.println(&quot;收藏成功！&quot;);</span>
+<span class="nc" id="L46">		return true;</span>
+	}
+
+	/**
+	 * 取消收藏
+	 */
+	public boolean removeFavorite(Long productId) {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L54">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L55">			return false;</span>
+		}
+
+<span class="nc" id="L58">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc" id="L59">		Favorite favorite = db.getFavoriteByUserAndProduct(currentUser.getId(), productId);</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (favorite == null) {</span>
+<span class="nc" id="L62">			System.out.println(&quot;您还未收藏该商品！&quot;);</span>
+<span class="nc" id="L63">			return false;</span>
+		}
+
+<span class="nc" id="L66">		db.deleteFavorite(favorite.getId());</span>
+<span class="nc" id="L67">		System.out.println(&quot;已取消收藏&quot;);</span>
+<span class="nc" id="L68">		return true;</span>
+	}
+
+	/**
+	 * 获取我的收藏列表
+	 */
+	public List&lt;Product&gt; getMyFavorites() {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L76">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L77">			return null;</span>
+		}
+
+<span class="nc" id="L80">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc" id="L81">		List&lt;Favorite&gt; favorites = db.getFavoritesByUserId(currentUser.getId());</span>
+
+<span class="nc" id="L83">		return favorites.stream()</span>
+<span class="nc" id="L84">				.map(f -&gt; db.getProductById(f.getProductId()))</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				.filter(p -&gt; p != null)</span>
+<span class="nc" id="L86">				.collect(Collectors.toList());</span>
+	}
+
+	/**
+	 * 获取浏览历史
+	 */
+	public List&lt;BrowseHistory&gt; getBrowseHistory() {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L94">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L95">			return null;</span>
+		}
+
+<span class="nc" id="L98">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc" id="L99">		return db.getBrowseHistoriesByUserId(currentUser.getId());</span>
+	}
+
+	/**
+	 * 获取浏览历史对应的商品
+	 */
+	public List&lt;Product&gt; getBrowseHistoryProducts() {
+<span class="nc" id="L106">		List&lt;BrowseHistory&gt; histories = getBrowseHistory();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (histories == null) {</span>
+<span class="nc" id="L108">			return null;</span>
+		}
+
+<span class="nc" id="L111">		return histories.stream()</span>
+<span class="nc" id="L112">				.map(h -&gt; db.getProductById(h.getProductId()))</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">				.filter(p -&gt; p != null)</span>
+<span class="nc" id="L114">				.collect(Collectors.toList());</span>
+	}
+
+	/**
+	 * 获取用户信息
+	 */
+	public User getUserById(Long userId) {
+<span class="nc" id="L121">		return db.getUserById(userId);</span>
+	}
+
+	/**
+	 * 查看个人资料
+	 */
+	public void displayUserProfile() {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L129">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L130">			return;</span>
+		}
+
+<span class="nc" id="L133">		User user = authService.getCurrentUser();</span>
+<span class="nc" id="L134">		System.out.println(&quot;\n========== 个人资料 ==========&quot;);</span>
+<span class="nc" id="L135">		System.out.println(&quot;用户ID: &quot; + user.getId());</span>
+<span class="nc" id="L136">		System.out.println(&quot;用户名: &quot; + user.getUsername());</span>
+<span class="nc" id="L137">		System.out.println(&quot;邮箱: &quot; + user.getEmail());</span>
+<span class="nc" id="L138">		System.out.println(&quot;手机: &quot; + user.getPhone());</span>
+<span class="nc" id="L139">		System.out.println(&quot;信用分: &quot; + user.getCreditScore());</span>
+<span class="nc" id="L140">		System.out.println(&quot;注册时间: &quot; + user.getRegisteredAt());</span>
+<span class="nc" id="L141">		System.out.println(&quot;==============================\n&quot;);</span>
+<span class="nc" id="L142">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChatService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">service</a> &gt; <span class="el_source">ChatService.java</span></div><h1>ChatService.java</h1><pre class="source lang-java linenums">package service;
+
+import model.*;
+import repository.Database;
+
+import java.util.List;
+
+public class ChatService {
+	private Database db;
+	private AuthService authService;
+
+<span class="nc" id="L12">	public ChatService(AuthService authService) {</span>
+<span class="nc" id="L13">		this.db = Database.getInstance();</span>
+<span class="nc" id="L14">		this.authService = authService;</span>
+<span class="nc" id="L15">	}</span>
+
+	/**
+	 * 创建或获取会话
+	 */
+	public Conversation getOrCreateConversation(Long otherUserId) {
+<span class="nc bnc" id="L21" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L22">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L23">			return null;</span>
+		}
+
+<span class="nc" id="L26">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">		if (currentUser.getId().equals(otherUserId)) {</span>
+<span class="nc" id="L28">			System.out.println(&quot;不能与自己聊天！&quot;);</span>
+<span class="nc" id="L29">			return null;</span>
+		}
+
+<span class="nc" id="L32">		User otherUser = db.getUserById(otherUserId);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">		if (otherUser == null) {</span>
+<span class="nc" id="L34">			System.out.println(&quot;用户不存在！&quot;);</span>
+<span class="nc" id="L35">			return null;</span>
+		}
+
+		// 查找是否已有会话
+<span class="nc" id="L39">		Conversation conversation = db.getConversationBetweenUsers(currentUser.getId(), otherUserId);</span>
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (conversation == null) {</span>
+			// 创建新会话
+<span class="nc" id="L43">			Long convId = db.generateConversationId();</span>
+<span class="nc" id="L44">			conversation = new Conversation(convId, currentUser.getId(), otherUserId);</span>
+<span class="nc" id="L45">			db.addConversation(conversation);</span>
+<span class="nc" id="L46">			System.out.println(&quot;已创建与 &quot; + otherUser.getUsername() + &quot; 的会话&quot;);</span>
+		}
+
+<span class="nc" id="L49">		return conversation;</span>
+	}
+
+	/**
+	 * 发送消息
+	 */
+	public boolean sendMessage(Long conversationId, String content) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L57">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L58">			return false;</span>
+		}
+
+<span class="nc bnc" id="L61" title="All 4 branches missed.">		if (content == null || content.trim().isEmpty()) {</span>
+<span class="nc" id="L62">			System.out.println(&quot;消息内容不能为空！&quot;);</span>
+<span class="nc" id="L63">			return false;</span>
+		}
+
+<span class="nc" id="L66">		Conversation conversation = db.getConversationById(conversationId);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (conversation == null) {</span>
+<span class="nc" id="L68">			System.out.println(&quot;会话不存在！&quot;);</span>
+<span class="nc" id="L69">			return false;</span>
+		}
+
+<span class="nc" id="L72">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (!conversation.isParticipant(currentUser.getId())) {</span>
+<span class="nc" id="L74">			System.out.println(&quot;您不是该会话的参与者！&quot;);</span>
+<span class="nc" id="L75">			return false;</span>
+		}
+
+		// 创建消息
+<span class="nc" id="L79">		Long messageId = db.generateMessageId();</span>
+<span class="nc" id="L80">		Long receiverId = conversation.getOtherUserId(currentUser.getId());</span>
+<span class="nc" id="L81">		Message message = new Message(messageId, conversationId, currentUser.getId(), receiverId, content);</span>
+
+<span class="nc" id="L83">		db.addMessage(message);</span>
+<span class="nc" id="L84">		conversation.addMessage(message);</span>
+<span class="nc" id="L85">		db.updateConversation(conversation);</span>
+
+<span class="nc" id="L87">		System.out.println(&quot;消息已发送&quot;);</span>
+<span class="nc" id="L88">		return true;</span>
+	}
+
+	/**
+	 * 获取会话历史
+	 */
+	public List&lt;Message&gt; getConversationHistory(Long conversationId) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L96">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L97">			return null;</span>
+		}
+
+<span class="nc" id="L100">		Conversation conversation = db.getConversationById(conversationId);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (conversation == null) {</span>
+<span class="nc" id="L102">			System.out.println(&quot;会话不存在！&quot;);</span>
+<span class="nc" id="L103">			return null;</span>
+		}
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (!conversation.isParticipant(authService.getCurrentUser().getId())) {</span>
+<span class="nc" id="L107">			System.out.println(&quot;您不是该会话的参与者！&quot;);</span>
+<span class="nc" id="L108">			return null;</span>
+		}
+
+<span class="nc" id="L111">		return db.getMessagesByConversationId(conversationId);</span>
+	}
+
+	/**
+	 * 获取我的所有会话
+	 */
+	public List&lt;Conversation&gt; getMyConversations() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L119">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L120">			return null;</span>
+		}
+
+<span class="nc" id="L123">		return db.getConversationsByUserId(authService.getCurrentUser().getId());</span>
+	}
+
+	/**
+	 * 标记消息为已读
+	 */
+	public void markMessageAsRead(Long messageId) {
+<span class="nc" id="L130">		Message message = db.getMessagesByConversationId(0L).stream()</span>
+<span class="nc" id="L131">				.filter(m -&gt; m.getId().equals(messageId))</span>
+<span class="nc" id="L132">				.findFirst()</span>
+<span class="nc" id="L133">				.orElse(null);</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (message != null) {</span>
+<span class="nc" id="L136">			message.markRead();</span>
+<span class="nc" id="L137">			db.updateMessage(message);</span>
+		}
+<span class="nc" id="L139">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,4 @@
+util\PasswordUtilTest.class
+integration\MarketplaceIntegrationTest.class
+integration\ChatIntegrationTest.class
+util\ValidationUtilTest.class

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">service</a> &gt; <span class="el_source">ProductService.java</span></div><h1>ProductService.java</h1><pre class="source lang-java linenums">package service;
+
+import model.*;
+import repository.Database;
+import util.ValidationUtil;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class ProductService {
+	private Database db;
+	private AuthService authService;
+
+<span class="nc" id="L15">	public ProductService(AuthService authService) {</span>
+<span class="nc" id="L16">		this.db = Database.getInstance();</span>
+<span class="nc" id="L17">		this.authService = authService;</span>
+<span class="nc" id="L18">	}</span>
+
+	/**
+	 * 发布商品
+	 */
+	public Product createProduct(String title, BigDecimal price, String description, Long categoryId) {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L25">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L26">			return null;</span>
+		}
+
+		// 验证输入
+<span class="nc bnc" id="L30" title="All 2 branches missed.">		if (!ValidationUtil.isValidProductTitle(title)) {</span>
+<span class="nc" id="L31">			System.out.println(&quot;商品标题不合法！(1-100字符)&quot;);</span>
+<span class="nc" id="L32">			return null;</span>
+		}
+
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (!ValidationUtil.isValidDescription(description)) {</span>
+<span class="nc" id="L36">			System.out.println(&quot;商品描述过长！(最多1000字符)&quot;);</span>
+<span class="nc" id="L37">			return null;</span>
+		}
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (price.compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
+<span class="nc" id="L41">			System.out.println(&quot;价格必须大于0！&quot;);</span>
+<span class="nc" id="L42">			return null;</span>
+		}
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (db.getCategoryById(categoryId) == null) {</span>
+<span class="nc" id="L46">			System.out.println(&quot;分类不存在！&quot;);</span>
+<span class="nc" id="L47">			return null;</span>
+		}
+
+		// 创建商品
+<span class="nc" id="L51">		Long productId = db.generateProductId();</span>
+<span class="nc" id="L52">		User currentUser = authService.getCurrentUser();</span>
+<span class="nc" id="L53">		Product product = new Product(productId, title, price, description, currentUser.getId(), categoryId);</span>
+<span class="nc" id="L54">		db.addProduct(product);</span>
+
+<span class="nc" id="L56">		System.out.println(&quot;商品发布成功！商品ID: &quot; + productId);</span>
+<span class="nc" id="L57">		return product;</span>
+	}
+
+	/**
+	 * 编辑商品
+	 */
+	public boolean updateProduct(Long productId, String title, BigDecimal price, String description, Long categoryId) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L65">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L66">			return false;</span>
+		}
+
+<span class="nc" id="L69">		Product product = db.getProductById(productId);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (product == null) {</span>
+<span class="nc" id="L71">			System.out.println(&quot;商品不存在！&quot;);</span>
+<span class="nc" id="L72">			return false;</span>
+		}
+
+		// 检查权限
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (!product.getOwnerId().equals(authService.getCurrentUser().getId())) {</span>
+<span class="nc" id="L77">			System.out.println(&quot;您没有权限编辑此商品！&quot;);</span>
+<span class="nc" id="L78">			return false;</span>
+		}
+
+		// 更新信息
+<span class="nc bnc" id="L82" title="All 4 branches missed.">		if (title != null &amp;&amp; !title.isEmpty()) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (!ValidationUtil.isValidProductTitle(title)) {</span>
+<span class="nc" id="L84">				System.out.println(&quot;商品标题不合法！&quot;);</span>
+<span class="nc" id="L85">				return false;</span>
+			}
+<span class="nc" id="L87">			product.setTitle(title);</span>
+		}
+
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (price != null &amp;&amp; price.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="nc" id="L91">			product.setPrice(price);</span>
+		}
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (description != null) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (!ValidationUtil.isValidDescription(description)) {</span>
+<span class="nc" id="L96">				System.out.println(&quot;商品描述过长！&quot;);</span>
+<span class="nc" id="L97">				return false;</span>
+			}
+<span class="nc" id="L99">			product.setDescription(description);</span>
+		}
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (categoryId != null) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (db.getCategoryById(categoryId) == null) {</span>
+<span class="nc" id="L104">				System.out.println(&quot;分类不存在！&quot;);</span>
+<span class="nc" id="L105">				return false;</span>
+			}
+<span class="nc" id="L107">			product.setCategoryId(categoryId);</span>
+		}
+
+<span class="nc" id="L110">		db.updateProduct(product);</span>
+<span class="nc" id="L111">		System.out.println(&quot;商品更新成功！&quot;);</span>
+<span class="nc" id="L112">		return true;</span>
+	}
+
+	/**
+	 * 删除商品
+	 */
+	public boolean deleteProduct(Long productId) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L120">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L121">			return false;</span>
+		}
+
+<span class="nc" id="L124">		Product product = db.getProductById(productId);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (product == null) {</span>
+<span class="nc" id="L126">			System.out.println(&quot;商品不存在！&quot;);</span>
+<span class="nc" id="L127">			return false;</span>
+		}
+
+		// 检查权限
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (!product.getOwnerId().equals(authService.getCurrentUser().getId())) {</span>
+<span class="nc" id="L132">			System.out.println(&quot;您没有权限删除此商品！&quot;);</span>
+<span class="nc" id="L133">			return false;</span>
+		}
+
+<span class="nc" id="L136">		db.deleteProduct(productId);</span>
+<span class="nc" id="L137">		System.out.println(&quot;商品已删除！&quot;);</span>
+<span class="nc" id="L138">		return true;</span>
+	}
+
+	/**
+	 * 更改商品状态
+	 */
+	public boolean changeProductStatus(Long productId, String status) {
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L146">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L147">			return false;</span>
+		}
+
+<span class="nc" id="L150">		Product product = db.getProductById(productId);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (product == null) {</span>
+<span class="nc" id="L152">			System.out.println(&quot;商品不存在！&quot;);</span>
+<span class="nc" id="L153">			return false;</span>
+		}
+
+		// 检查权限
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (!product.getOwnerId().equals(authService.getCurrentUser().getId())) {</span>
+<span class="nc" id="L158">			System.out.println(&quot;您没有权限修改此商品状态！&quot;);</span>
+<span class="nc" id="L159">			return false;</span>
+		}
+
+<span class="nc" id="L162">		product.setStatus(status);</span>
+<span class="nc" id="L163">		db.updateProduct(product);</span>
+<span class="nc" id="L164">		System.out.println(&quot;商品状态已更新为: &quot; + status);</span>
+<span class="nc" id="L165">		return true;</span>
+	}
+
+	/**
+	 * 获取所有在售商品
+	 */
+	public List&lt;Product&gt; listPublishedProducts() {
+<span class="nc" id="L172">		return db.getProductsByStatus(&quot;PUBLISHED&quot;);</span>
+	}
+
+	/**
+	 * 获取我的发布
+	 */
+	public List&lt;Product&gt; getMyProducts() {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (!authService.isLoggedIn()) {</span>
+<span class="nc" id="L180">			System.out.println(&quot;请先登录！&quot;);</span>
+<span class="nc" id="L181">			return null;</span>
+		}
+<span class="nc" id="L183">		return db.getProductsByOwnerId(authService.getCurrentUser().getId());</span>
+	}
+
+	/**
+	 * 获取商品详情
+	 */
+	public Product getProductById(Long productId) {
+<span class="nc" id="L190">		Product product = db.getProductById(productId);</span>
+
+		// 记录浏览历史
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		if (authService.isLoggedIn() &amp;&amp; product != null) {</span>
+<span class="nc" id="L194">			BrowseHistory history = new BrowseHistory(</span>
+<span class="nc" id="L195">					db.generateHistoryId(),</span>
+<span class="nc" id="L196">					authService.getCurrentUser().getId(),</span>
+<span class="nc" id="L197">					productId,</span>
+<span class="nc" id="L198">					product.getTitle());</span>
+<span class="nc" id="L199">			db.addBrowseHistory(history);</span>
+		}
+
+<span class="nc" id="L202">		return product;</span>
+	}
+
+	/**
+	 * 按分类筛选
+	 */
+	public List&lt;Product&gt; getProductsByCategory(Long categoryId) {
+<span class="nc" id="L209">		return db.getProductsByStatus(&quot;PUBLISHED&quot;).stream()</span>
+<span class="nc" id="L210">				.filter(p -&gt; p.getCategoryId().equals(categoryId))</span>
+<span class="nc" id="L211">				.collect(Collectors.toList());</span>
+	}
+
+	/**
+	 * 获取商品发布者
+	 */
+	public User getProductOwner(Long productId) {
+<span class="nc" id="L218">		Product product = db.getProductById(productId);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (product == null) {</span>
+<span class="nc" id="L220">			return null;</span>
+		}
+<span class="nc" id="L222">		return db.getUserById(product.getOwnerId());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

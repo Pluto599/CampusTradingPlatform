@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Database.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">campus-market</a> &gt; <a href="index.source.html" class="el_package">repository</a> &gt; <span class="el_source">Database.java</span></div><h1>Database.java</h1><pre class="source lang-java linenums">package repository;
+
+import model.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Database {
+	// 单例模式
+	private static Database instance;
+
+	// 内存数据存储
+	private Map&lt;Long, User&gt; users;
+	private Map&lt;Long, Product&gt; products;
+	private Map&lt;Long, Category&gt; categories;
+	private Map&lt;Long, Tag&gt; tags;
+	private Map&lt;Long, Favorite&gt; favorites;
+	private Map&lt;Long, BrowseHistory&gt; browseHistories;
+	private Map&lt;Long, Conversation&gt; conversations;
+	private Map&lt;Long, Message&gt; messages;
+
+	// ID生成器
+<span class="nc" id="L22">	private Long userIdCounter = 1L;</span>
+<span class="nc" id="L23">	private Long productIdCounter = 1L;</span>
+<span class="nc" id="L24">	private Long categoryIdCounter = 1L;</span>
+<span class="nc" id="L25">	private Long tagIdCounter = 1L;</span>
+<span class="nc" id="L26">	private Long favoriteIdCounter = 1L;</span>
+<span class="nc" id="L27">	private Long historyIdCounter = 1L;</span>
+<span class="nc" id="L28">	private Long conversationIdCounter = 1L;</span>
+<span class="nc" id="L29">	private Long messageIdCounter = 1L;</span>
+
+<span class="nc" id="L31">	private Database() {</span>
+<span class="nc" id="L32">		users = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L33">		products = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L34">		categories = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L35">		tags = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L36">		favorites = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L37">		browseHistories = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L38">		conversations = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L39">		messages = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L40">		initDefaultData();</span>
+<span class="nc" id="L41">	}</span>
+
+	public static Database getInstance() {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (instance == null) {</span>
+<span class="nc" id="L45">			instance = new Database();</span>
+		}
+<span class="nc" id="L47">		return instance;</span>
+	}
+
+	// 初始化默认数据
+	private void initDefaultData() {
+		// 添加默认分类
+<span class="nc" id="L53">		addCategory(new Category(categoryIdCounter++, &quot;电子产品&quot;));</span>
+<span class="nc" id="L54">		addCategory(new Category(categoryIdCounter++, &quot;书籍教材&quot;));</span>
+<span class="nc" id="L55">		addCategory(new Category(categoryIdCounter++, &quot;生活用品&quot;));</span>
+<span class="nc" id="L56">		addCategory(new Category(categoryIdCounter++, &quot;运动器材&quot;));</span>
+<span class="nc" id="L57">		addCategory(new Category(categoryIdCounter++, &quot;其他&quot;));</span>
+
+		// 添加默认标签
+<span class="nc" id="L60">		addTag(new Tag(tagIdCounter++, &quot;九成新&quot;));</span>
+<span class="nc" id="L61">		addTag(new Tag(tagIdCounter++, &quot;全新&quot;));</span>
+<span class="nc" id="L62">		addTag(new Tag(tagIdCounter++, &quot;急售&quot;));</span>
+<span class="nc" id="L63">		addTag(new Tag(tagIdCounter++, &quot;可议价&quot;));</span>
+<span class="nc" id="L64">		addTag(new Tag(tagIdCounter++, &quot;包邮&quot;));</span>
+<span class="nc" id="L65">	}</span>
+
+	// User CRUD
+	public Long generateUserId() {
+<span class="nc" id="L69">		return userIdCounter++;</span>
+	}
+
+	public void addUser(User user) {
+<span class="nc" id="L73">		users.put(user.getId(), user);</span>
+<span class="nc" id="L74">	}</span>
+
+	public User getUserById(Long id) {
+<span class="nc" id="L77">		return users.get(id);</span>
+	}
+
+	public User getUserByUsername(String username) {
+<span class="nc" id="L81">		return users.values().stream()</span>
+<span class="nc" id="L82">				.filter(u -&gt; u.getUsername().equals(username))</span>
+<span class="nc" id="L83">				.findFirst()</span>
+<span class="nc" id="L84">				.orElse(null);</span>
+	}
+
+	public User getUserByEmail(String email) {
+<span class="nc" id="L88">		return users.values().stream()</span>
+<span class="nc" id="L89">				.filter(u -&gt; u.getEmail().equals(email))</span>
+<span class="nc" id="L90">				.findFirst()</span>
+<span class="nc" id="L91">				.orElse(null);</span>
+	}
+
+	public List&lt;User&gt; getAllUsers() {
+<span class="nc" id="L95">		return new ArrayList&lt;&gt;(users.values());</span>
+	}
+
+	public void updateUser(User user) {
+<span class="nc" id="L99">		users.put(user.getId(), user);</span>
+<span class="nc" id="L100">	}</span>
+
+	// Product CRUD
+	public Long generateProductId() {
+<span class="nc" id="L104">		return productIdCounter++;</span>
+	}
+
+	public void addProduct(Product product) {
+<span class="nc" id="L108">		products.put(product.getId(), product);</span>
+<span class="nc" id="L109">	}</span>
+
+	public Product getProductById(Long id) {
+<span class="nc" id="L112">		return products.get(id);</span>
+	}
+
+	public List&lt;Product&gt; getAllProducts() {
+<span class="nc" id="L116">		return new ArrayList&lt;&gt;(products.values());</span>
+	}
+
+	public List&lt;Product&gt; getProductsByOwnerId(Long ownerId) {
+<span class="nc" id="L120">		return products.values().stream()</span>
+<span class="nc" id="L121">				.filter(p -&gt; p.getOwnerId().equals(ownerId))</span>
+<span class="nc" id="L122">				.collect(Collectors.toList());</span>
+	}
+
+	public List&lt;Product&gt; getProductsByStatus(String status) {
+<span class="nc" id="L126">		return products.values().stream()</span>
+<span class="nc" id="L127">				.filter(p -&gt; p.getStatus().equals(status))</span>
+<span class="nc" id="L128">				.collect(Collectors.toList());</span>
+	}
+
+	public void updateProduct(Product product) {
+<span class="nc" id="L132">		products.put(product.getId(), product);</span>
+<span class="nc" id="L133">	}</span>
+
+	public void deleteProduct(Long id) {
+<span class="nc" id="L136">		products.remove(id);</span>
+<span class="nc" id="L137">	}</span>
+
+	// Category CRUD
+	public Long generateCategoryId() {
+<span class="nc" id="L141">		return categoryIdCounter++;</span>
+	}
+
+	public void addCategory(Category category) {
+<span class="nc" id="L145">		categories.put(category.getId(), category);</span>
+<span class="nc" id="L146">	}</span>
+
+	public Category getCategoryById(Long id) {
+<span class="nc" id="L149">		return categories.get(id);</span>
+	}
+
+	public List&lt;Category&gt; getAllCategories() {
+<span class="nc" id="L153">		return new ArrayList&lt;&gt;(categories.values());</span>
+	}
+
+	// Tag CRUD
+	public Long generateTagId() {
+<span class="nc" id="L158">		return tagIdCounter++;</span>
+	}
+
+	public void addTag(Tag tag) {
+<span class="nc" id="L162">		tags.put(tag.getId(), tag);</span>
+<span class="nc" id="L163">	}</span>
+
+	public Tag getTagById(Long id) {
+<span class="nc" id="L166">		return tags.get(id);</span>
+	}
+
+	public List&lt;Tag&gt; getAllTags() {
+<span class="nc" id="L170">		return new ArrayList&lt;&gt;(tags.values());</span>
+	}
+
+	// Favorite CRUD
+	public Long generateFavoriteId() {
+<span class="nc" id="L175">		return favoriteIdCounter++;</span>
+	}
+
+	public void addFavorite(Favorite favorite) {
+<span class="nc" id="L179">		favorites.put(favorite.getId(), favorite);</span>
+<span class="nc" id="L180">	}</span>
+
+	public void deleteFavorite(Long id) {
+<span class="nc" id="L183">		favorites.remove(id);</span>
+<span class="nc" id="L184">	}</span>
+
+	public List&lt;Favorite&gt; getFavoritesByUserId(Long userId) {
+<span class="nc" id="L187">		return favorites.values().stream()</span>
+<span class="nc" id="L188">				.filter(f -&gt; f.getUserId().equals(userId))</span>
+<span class="nc" id="L189">				.collect(Collectors.toList());</span>
+	}
+
+	public Favorite getFavoriteByUserAndProduct(Long userId, Long productId) {
+<span class="nc" id="L193">		return favorites.values().stream()</span>
+<span class="nc bnc" id="L194" title="All 4 branches missed.">				.filter(f -&gt; f.getUserId().equals(userId) &amp;&amp; f.getProductId().equals(productId))</span>
+<span class="nc" id="L195">				.findFirst()</span>
+<span class="nc" id="L196">				.orElse(null);</span>
+	}
+
+	// BrowseHistory CRUD
+	public Long generateHistoryId() {
+<span class="nc" id="L201">		return historyIdCounter++;</span>
+	}
+
+	public void addBrowseHistory(BrowseHistory history) {
+<span class="nc" id="L205">		browseHistories.put(history.getId(), history);</span>
+<span class="nc" id="L206">	}</span>
+
+	public List&lt;BrowseHistory&gt; getBrowseHistoriesByUserId(Long userId) {
+<span class="nc" id="L209">		return browseHistories.values().stream()</span>
+<span class="nc" id="L210">				.filter(h -&gt; h.getUserId().equals(userId))</span>
+<span class="nc" id="L211">				.sorted((h1, h2) -&gt; h2.getViewedAt().compareTo(h1.getViewedAt()))</span>
+<span class="nc" id="L212">				.collect(Collectors.toList());</span>
+	}
+
+	// Conversation CRUD
+	public Long generateConversationId() {
+<span class="nc" id="L217">		return conversationIdCounter++;</span>
+	}
+
+	public void addConversation(Conversation conversation) {
+<span class="nc" id="L221">		conversations.put(conversation.getId(), conversation);</span>
+<span class="nc" id="L222">	}</span>
+
+	public Conversation getConversationById(Long id) {
+<span class="nc" id="L225">		return conversations.get(id);</span>
+	}
+
+	public List&lt;Conversation&gt; getConversationsByUserId(Long userId) {
+<span class="nc" id="L229">		return conversations.values().stream()</span>
+<span class="nc" id="L230">				.filter(c -&gt; c.isParticipant(userId))</span>
+<span class="nc" id="L231">				.collect(Collectors.toList());</span>
+	}
+
+	public Conversation getConversationBetweenUsers(Long user1Id, Long user2Id) {
+<span class="nc" id="L235">		return conversations.values().stream()</span>
+<span class="nc bnc" id="L236" title="All 4 branches missed.">				.filter(c -&gt; c.isParticipant(user1Id) &amp;&amp; c.isParticipant(user2Id))</span>
+<span class="nc" id="L237">				.findFirst()</span>
+<span class="nc" id="L238">				.orElse(null);</span>
+	}
+
+	public void updateConversation(Conversation conversation) {
+<span class="nc" id="L242">		conversations.put(conversation.getId(), conversation);</span>
+<span class="nc" id="L243">	}</span>
+
+	// Message CRUD
+	public Long generateMessageId() {
+<span class="nc" id="L247">		return messageIdCounter++;</span>
+	}
+
+	public void addMessage(Message message) {
+<span class="nc" id="L251">		messages.put(message.getId(), message);</span>
+<span class="nc" id="L252">	}</span>
+
+	public List&lt;Message&gt; getMessagesByConversationId(Long conversationId) {
+<span class="nc" id="L255">		return messages.values().stream()</span>
+<span class="nc" id="L256">				.filter(m -&gt; m.getConversationId().equals(conversationId))</span>
+<span class="nc" id="L257">				.sorted(Comparator.comparing(Message::getSentAt))</span>
+<span class="nc" id="L258">				.collect(Collectors.toList());</span>
+	}
+
+	public void updateMessage(Message message) {
+<span class="nc" id="L262">		messages.put(message.getId(), message);</span>
+<span class="nc" id="L263">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
