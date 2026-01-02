@@ -1,0 +1,11 @@
+{
+  // 让 VS Code Java 扩展正确识别本项目的源码/测试源码目录
+  //（因为本项目不是标准 Maven 目录结构：生产代码在 project/code/src 下）
+  "java.project.sourcePaths": [
+    "project/code/src"
+  ],
+  "java.project.testPaths": [
+    "project/code/src/test/java"
+  ],
+  "java.configuration.updateBuildConfiguration": "automatic"
+}
